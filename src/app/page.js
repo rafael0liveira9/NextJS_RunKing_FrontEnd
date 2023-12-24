@@ -24,6 +24,20 @@ export default function Login() {
 
   }, [userName, userPassword])
 
+  function saveSettings() {
+    setIsLoading(true)
+
+    localStorage.setItem("event_raia_one", true);
+    localStorage.setItem("event_raia_two", true);
+    localStorage.setItem("event_raia_tree", true);
+
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000);
+
+    router.push("/home");
+  }
+
   async function signIn() {
     setIsLoading(true);
 
@@ -86,7 +100,7 @@ export default function Login() {
   return (
     <main className="fullContainer">
       <Header title="Login"></Header>
-      <div className="mainContainer" style={{ width: "100%" }}>
+      <div className="mainContainer" style={{ width: "100%", maxWidth: "800px" }}>
         <div className="mainContainer gap-4" style={{ alignItems: "end" }}>
           <div className="w-full mb-5 flex justify-center">
             <img src="/images/logo-runking.svg"></img>
@@ -130,10 +144,8 @@ export default function Login() {
             className='btnDisabled'
             style={{ marginTop: "10%" }}
             disabled={isLoading}
-            onClick={() => {
-              router.push("/home");
-            }}
-          >CONTINUAR SEM LOGAR</button>
+            onClick={() => saveSettings()}
+          >{isLoading === true ? <Loading></Loading> : "CONTINUAR SEM LOGAR"}</button>
         </div>
       </div>
       <Footer menu={false}></Footer>

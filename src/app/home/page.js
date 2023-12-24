@@ -7,6 +7,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import FloatMenu from "@/components/floatMenu";
 import RaiaCard from "@/components/raia";
+import Loading from "@/components/loading";
+import RaiaModal from "@/components/modal/raiamodal";
 
 
 export default function EventSelect() {
@@ -15,6 +17,15 @@ export default function EventSelect() {
   const [user, setUser] = useState({})
   const [eventSelected, setEventSelected] = useState({})
   const [events, setEvents] = useState([])
+  const [isLoading, setisLoading] = useState(false)
+
+  const [modalRaiaOne, setModalRaiaOne] = useState(false)
+  const [modalRaiaTwo, setModalRaiaTwo] = useState(false)
+  const [modalRaiaTree, setModalRaiaTree] = useState(false)
+
+  const [numberRaiaOne, setNumberRaiaOne] = useState("-")
+  const [numberRaiaTwo, setNumberRaiaTwo] = useState("-")
+  const [numberRaiaTree, setNumberRaiaTree] = useState("-")
 
   const URL_API_RUNKING = "https://api.runking.com.br/"
 
@@ -27,6 +38,25 @@ export default function EventSelect() {
       getEvents();
     }
   }, [path])
+
+  useEffect(() => {
+    if (localStorage.getItem("raia_one_number") != undefined) {
+      setNumberRaiaOne(localStorage.getItem("raia_one_number"))
+    } else {
+      setNumberRaiaOne("-")
+    }
+    if (localStorage.getItem("raia_two_number") != undefined) {
+      setNumberRaiaTwo(localStorage.getItem("raia_two_number"))
+    } else {
+      setNumberRaiaOne("-")
+    }
+    if (localStorage.getItem("raia_tree_number") != undefined) {
+      setNumberRaiaTree(localStorage.getItem("raia_tree_number"))
+    } else {
+      setNumberRaiaOne("-")
+    }
+
+  }, [modalRaiaOne, modalRaiaTwo, modalRaiaTree])
 
   function alreadyLogin() {
     const user = {
@@ -57,10 +87,6 @@ export default function EventSelect() {
     setUser(user)
     setEventSelected(event)
 
-    if (user.id == "") {
-      router.push("/")
-    }
-
   }
 
 
@@ -87,19 +113,76 @@ export default function EventSelect() {
     }
   }
 
+  function openRaiaOneModal() {
+    setisLoading(true);
+    setModalRaiaOne(true);
+  }
+
+  function openRaiaTwoModal() {
+    setModalRaiaOne(false)
+    setModalRaiaTwo(true)
+  }
+
+  function openRaiaTreeModal() {
+    setModalRaiaTwo(false)
+    setModalRaiaTree(true)
+  }
+
+  function closeRaiaModals() {
+    setModalRaiaOne(false)
+    setModalRaiaTwo(false)
+    setModalRaiaTree(false)
+    setisLoading(false)
+  }
+
   return (
     <main className="fullContainer">
       <Header title={eventSelected?.title || "Inicio"} user={user}></Header>
+
+      {modalRaiaOne === true &&
+        <RaiaModal
+          confirm={eventSelected?.raiaTwo == "true" ? () => openRaiaTwoModal() : () => closeRaiaModals()}
+          cancel={() => closeRaiaModals()}
+          raia={1}
+          next={eventSelected?.raiaTwo == "true" ? true : false}></RaiaModal>
+      }
+      {modalRaiaTwo == true &&
+        <RaiaModal
+          confirm={eventSelected?.raiaTree == "true" ? () => openRaiaTreeModal() : () => closeRaiaModals()}
+          cancel={() => closeRaiaModals()}
+          raia={2}
+          next={eventSelected?.raiaTree == "true" ? true : false}></RaiaModal>
+      }
+      {modalRaiaTree == true &&
+        <RaiaModal
+          confirm={() => closeRaiaModals()}
+          cancel={() => closeRaiaModals()}
+          raia={3}
+          next={false}></RaiaModal>
+      }
+
       <div className="mainContainer" style={{ width: "100%", justifyContent: "flex-start" }}>
         <div className="homeContent">
           <div className="btnDiv">
-            <button className="btnGreen btnGeneral" >INICIAR</button>
-            <button className="btnRed btnGeneral" >FINALIZAR</button>
+            <button className="btnGreen btnGeneral"
+              disabled={(eventSelected?.raiaOne == false && eventSelected?.raiaTwo == false && eventSelected?.raiaTree == false) || isLoading}
+              onClick={() => openRaiaOneModal()}
+            >{isLoading === true ? <Loading></Loading> : "INICIAR"}</button>
+            <button className="btnRed btnGeneral"
+              disabled={(eventSelected?.raiaOne == false && eventSelected?.raiaTwo == false && eventSelected?.raiaTree == false) || isLoading}
+              onClick={() => console.log("bbb")}
+            >{isLoading === true ? <Loading></Loading> : "FINALIZAR"}</button>
           </div>
           <div className="raiaDiv">
-            <RaiaCard status={eventSelected?.raiaOne == "true" ? true : false} title="RAIA 1" number={1000}></RaiaCard>
-            <RaiaCard status={eventSelected?.raiaTwo == "true" ? true : false} title="RAIA 2" number={1230}></RaiaCard>
-            <RaiaCard status={eventSelected?.raiaTree == "true" ? true : false} title="RAIA 3" number={1247}></RaiaCard>
+            {!eventSelected?.raiaOne && !eventSelected?.raiaTwo && !eventSelected?.raiaTree
+              ?
+              <p style={{ marginTop: "100px" }}>Nenhuma RAIA Selecionada!</p>
+              :
+              ""
+            }
+            <RaiaCard status={eventSelected?.raiaOne == "true" ? true : false} title="RAIA 1" number={numberRaiaOne}></RaiaCard>
+            <RaiaCard status={eventSelected?.raiaTwo == "true" ? true : false} title="RAIA 2" number={numberRaiaTwo}></RaiaCard>
+            <RaiaCard status={eventSelected?.raiaTree == "true" ? true : false} title="RAIA 3" number={numberRaiaTree}></RaiaCard>
           </div>
         </div>
       </div>

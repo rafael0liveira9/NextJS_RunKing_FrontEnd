@@ -245,6 +245,7 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   gap: 7px;
+  cursor: pointer;
 }
 .btnBlue {
   font-weight: bold;
@@ -258,7 +259,10 @@ textarea:focus {
   border-radius: 35px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 7px;
+  cursor: pointer;
 }
 .btnBlack {
   font-weight: bold;
@@ -275,6 +279,7 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   gap: 7px;
+  cursor: pointer;
 }
 .btnRed {
   font-weight: bold;
@@ -291,6 +296,7 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   gap: 7px;
+  cursor: pointer;
 }
 .btnDisabled {
   font-weight: bold;
@@ -307,6 +313,7 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   gap: 7px;
+  cursor: pointer;
 }
 .btnGreen img {
   width: 20px;
@@ -349,6 +356,24 @@ textarea:focus {
   }
 }
 
+@media (max-height: 815px) {
+  .btnGreen {
+    padding: 5px 15px !important;
+  }
+  .btnBlue {
+    padding: 5px 15px !important;
+  }
+  .btnBlack {
+    padding: 5px 15px !important;
+  }
+  .btnRed {
+    padding: 5px 15px !important;
+  }
+  .btnDisabled {
+    padding: 5px 15px !important;
+  }
+}
+
 /* ****************** HEADER */
 
 /* ****************** FLOAT MENU */
@@ -364,6 +389,8 @@ textarea:focus {
   z-index: 8;
   background-color: var(--grey-primary);
   transition: all 0.5s ease;
+  cursor: pointer;
+  border-radius: 40px;
 }
 
 .menuItem:first-child {
@@ -425,6 +452,7 @@ textarea:focus {
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   gap: 10px;
+  cursor: pointer;
 }
 .cardEventLogo {
   width: 30%;
@@ -485,7 +513,8 @@ textarea:focus {
 @media (min-width: 930px) {
   .cardEvent {
     max-width: 930px;
-    min-width: 930px;
+    min-width: 800px;
+    padding: 3vh 0;
   }
 }
 
@@ -510,6 +539,7 @@ textarea:focus {
 .btnGeneral {
   width: 50%;
   max-width: 300px;
+  cursor: pointer;
 }
 
 @media (min-width: 930px) {
@@ -520,6 +550,30 @@ textarea:focus {
   }
   .homeContent {
     flex-direction: column;
+  }
+}
+
+@media (max-height: 815px) {
+  .homeContent {
+    margin: 0;
+    padding: 0;
+  }
+
+  .btnDiv {
+    margin: 10px 0 !important;
+  }
+  .raiaDiv {
+    margin: 15px 0 !important;
+  }
+  .raiaTitle {
+    min-height: 20px !important;
+  }
+  .raiaCard {
+    height: 120px !important;
+  }
+  .raiaInfo {
+    padding: 20px 0;
+    gap: 10px;
   }
 }
 
@@ -683,6 +737,28 @@ textarea:focus {
   }
 }
 
+@media (max-height: 815px) {
+  .settingsContent {
+    max-width: 90vw;
+    min-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    gap: 10px;
+  }
+
+  .settingSaveBtn {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
 /* ****************** VIEW */
 
 .mainView {
@@ -704,6 +780,7 @@ textarea:focus {
 }
 
 .viewBtn {
+  cursor: pointer;
   min-width: 140px;
 }
 
@@ -857,6 +934,7 @@ textarea:focus {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 @media (min-width: 930px) {
@@ -874,6 +952,20 @@ textarea:focus {
   }
 }
 
+@media (max-height: 815px) {
+  .mainProfile {
+    margin: 10px 0;
+    gap: 10px;
+  }
+
+  .imageProfile {
+    margin: 10px 0;
+  }
+  .imageProfile img {
+    width: 20%;
+  }
+}
+
 /* ****************** CONFIRM MODAL */
 
 .confirm-modal {
@@ -884,10 +976,11 @@ textarea:focus {
   padding: 60px 30px;
   transition: all 0.5s ease;
   position: absolute;
-  background-color: var(--white-secondary);
+  background-color: var(--grey-primary);
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   gap: 40px;
+  color: #ffffff;
 }
 
 .btnModalConfirm {
@@ -899,15 +992,53 @@ textarea:focus {
   gap: 20px;
 }
 
-@media (min-width: 930px) {
-  .confirm {
+/* @media (min-width: 930px) {
+  .confirm-modal {
     max-width: 930px;
     min-width: 930px;
   }
-}
+} */
 
 @media (min-width: 500px) {
   .confirm-modal {
+    max-width: 480px;
+  }
+}
+
+/* ****************** RAIA MODAL */
+
+.raia-modal {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: auto;
+  padding: 60px 30px;
+  transition: all 0.5s ease;
+  position: absolute;
+  background-color: var(--grey-primary);
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  gap: 40px;
+  color: #ffffff;
+}
+
+.raia-number-input {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  padding: 5px 15px;
+  color: var(--black-neutral-dark);
+}
+/* @media (min-width: 930px) {
+  .raia-modal {
+    max-width: 930px;
+    min-width: 930px;
+  }
+} */
+
+@media (min-width: 500px) {
+  .raia-modal {
     max-width: 480px;
   }
 }
