@@ -83,7 +83,7 @@ export default function Profile() {
   return (
     <main className="fullContainer">
       <Header title={"Configurações do Perfil"}></Header>
-      {confirmModalisOpen == true && <ConfirmModal confirm={() => logOut()} cancel={() => confirmModalClose()}></ConfirmModal>}
+      {confirmModalisOpen == true && <ConfirmModal confirm={() => logOut()} cancel={() => confirmModalClose()} question={"Deslogar"}></ConfirmModal>}
       <div className="mainContainer" style={{ width: "100%", justifyContent: "flex-start" }}>
         <div className="mainProfile">
           <div className="imageProfile">

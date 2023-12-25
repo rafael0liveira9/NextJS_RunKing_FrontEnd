@@ -13,9 +13,9 @@ import Separator from "@/components/separator";
 export default function Settings() {
   const router = useRouter();
   const path = usePathname()
-  const [firstSelected, setFirstSelected] = useState(localStorage.getItem("event_raia_one") == "true" ? true : false)
-  const [secondSelected, setSecondSelected] = useState(localStorage.getItem("event_raia_two") == "true" ? true : false)
-  const [thirdSelected, setThirdSelected] = useState(localStorage.getItem("event_raia_tree") == "true" ? true : false)
+  const [firstSelected, setFirstSelected] = useState(true)
+  const [secondSelected, setSecondSelected] = useState(true)
+  const [thirdSelected, setThirdSelected] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
 
   const URL_API_RUNKING = "https://api.runking.com.br/"
@@ -29,21 +29,23 @@ export default function Settings() {
 
 
   function saveSettings() {
-    setIsLoading(true)
-
     localStorage.setItem("event_raia_one", firstSelected);
     localStorage.setItem("event_raia_two", secondSelected);
     localStorage.setItem("event_raia_tree", thirdSelected);
 
+    setIsLoading(true)
+
     setTimeout(() => {
+
       setIsLoading(false)
-    }, 1000);
+    }, 2000);
+
+
   }
 
   useEffect(() => {
     getSettings()
   }, [path])
-
 
   return (
     <main className="fullContainer">

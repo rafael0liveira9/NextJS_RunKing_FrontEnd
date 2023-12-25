@@ -56,7 +56,6 @@ export default function EventSelect() {
       });
 
       if (!response.ok) {
-        console.log({ response })
         throw new Error(`Erro na requisição: ${response.status} - ${response.statusText}`);
       }
 

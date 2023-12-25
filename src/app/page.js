@@ -19,7 +19,7 @@ export default function Login() {
 
 
   useEffect(() => {
-    console.log(userName + " | " + userPassword)
+
     alreadyLogin()
 
   }, [userName, userPassword])
@@ -58,7 +58,7 @@ export default function Login() {
       }
 
       const data = await response.json();
-      console.log(data);
+
 
       if (!data.length) {
         localStorage.setItem("user_id", data.id);

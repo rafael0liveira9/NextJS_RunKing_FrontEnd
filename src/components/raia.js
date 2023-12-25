@@ -2,7 +2,7 @@
 
 
 
-export default function RaiaCard({ status, title, number }) {
+export default function RaiaCard({ status, title, number, time }) {
     if (status === true) {
         return (
             <div className="raiaCard">
@@ -11,7 +11,7 @@ export default function RaiaCard({ status, title, number }) {
                 </div>
                 <div className="raiaInfo">
                     <p>Número: {number}</p>
-                    <p>Tempo: 00:00:00</p>
+                    <p>Tempo: {time}</p>
                 </div>
             </div>
         )
