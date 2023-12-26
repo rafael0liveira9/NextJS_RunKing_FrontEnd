@@ -67,9 +67,9 @@ export default function View() {
     localStorage.setItem("raia_two_time", 0)
     localStorage.setItem("raia_tree_time", 0)
 
-    setRaiaOne()
-    setRaiaTwo()
-    setRaiaTree()
+    setRaiaOne(localStorage.getItem("event_raia_one"))
+    setRaiaTwo(localStorage.getItem("event_raia_two"))
+    setRaiaTree(localStorage.getItem("event_raia_tree"))
 
     setNumberRaiaOne("-")
     setNumberRaiaTwo("-")
@@ -155,6 +155,10 @@ export default function View() {
           <div className="viewInfoDiv">
             <ul className="viewList">
               <li className="viewListTitle"><h6>Raia</h6><h6>Número de peito</h6><h6>Tempo</h6></li>
+              {raiaOne != "true" && raiaTwo != "true" && raiaTree != "true" ?
+                <p style={{ margin: "100px" }}>Nenhuma Raia Selecionada</p>
+                : ""}
+
               {raiaOne == "true" && <li className="viewListItem"><h6>1</h6><h6>{numberRaiaOne}</h6><h6>{timeRaiaOne}</h6></li>}
               {raiaTwo == "true" && <li className="viewListItem"><h6>2</h6><h6>{numberRaiaTwo}</h6><h6>{timeRaiaTwo}</h6></li>}
               {raiaTree == "true" && <li className="viewListItem"><h6>3</h6><h6>{numberRaiaTree}</h6><h6>{timeRaiaTree}</h6></li>}

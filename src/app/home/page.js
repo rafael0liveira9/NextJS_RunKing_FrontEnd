@@ -315,12 +315,9 @@ export default function EventSelect() {
 
           </div>
           <div className="raiaDiv">
-            {!eventSelected?.raiaOne && !eventSelected?.raiaTwo && !eventSelected?.raiaTree
-              ?
-              <p style={{ marginTop: "100px" }}>Nenhuma RAIA Selecionada!</p>
-              :
-              ""
-            }
+            {eventSelected?.raiaOne != "true" && eventSelected?.raiaTwo != "true" && eventSelected?.raiaTree != "true" ?
+              <p style={{ margin: "100px" }}>Nenhuma Raia Selecionada</p>
+              : ""}
             <RaiaCard status={eventSelected?.raiaOne == "true" ? true : false} title="RAIA 1" number={numberRaiaOne} time={timeRaiaOne}></RaiaCard>
             <RaiaCard status={eventSelected?.raiaTwo == "true" ? true : false} title="RAIA 2" number={numberRaiaTwo} time={timeRaiaTwo}></RaiaCard>
             <RaiaCard status={eventSelected?.raiaTree == "true" ? true : false} title="RAIA 3" number={numberRaiaTree} time={timeRaiaTree}></RaiaCard>
