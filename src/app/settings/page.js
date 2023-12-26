@@ -38,7 +38,7 @@ export default function Settings() {
     setTimeout(() => {
 
       setIsLoading(false)
-    }, 2000);
+    }, 1000);
 
 
   }

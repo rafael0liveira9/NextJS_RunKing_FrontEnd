@@ -7,6 +7,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import FloatMenu from "@/components/floatMenu";
 import ConfirmModal from "@/components/modal/confirmation";
+import exportCSV from "@/components/exportFile";
+import Loading from "@/components/loading";
 
 
 export default function View() {
@@ -14,6 +16,8 @@ export default function View() {
   const path = usePathname();
 
   const [deleteModal, setDeleteModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingDel, setIsLoadingDel] = useState(false)
 
   const [eventName, setEventName] = useState("")
   const [eventDate, setEventDate] = useState("")
@@ -54,6 +58,7 @@ export default function View() {
   }
 
   function deleteData() {
+    setIsLoadingDel(true);
 
     localStorage.setItem("raia_one_number", "-")
     localStorage.setItem("raia_two_number", "-")
@@ -75,6 +80,11 @@ export default function View() {
     setTimeRaiaTree(0)
 
     setDeleteModal(false)
+
+    setTimeout(() => {
+
+      setIsLoadingDel(false);
+    }, 1000);
   }
 
   const formatTime = (totalSeconds) => {
@@ -94,6 +104,37 @@ export default function View() {
     getData();
   }, [path])
 
+  let data = [];
+
+  function createCSV() {
+    setIsLoading(true);
+
+    raiaOne == "true" ? data = [...data, {
+      "Raia": "1",
+      "Número de Peito": numberRaiaOne,
+      "Tempo": timeRaiaOne
+    }] : ""
+    raiaTwo == "true" ? data = [...data, {
+      "Raia": "2",
+      "Número de Peito": numberRaiaTwo,
+      "Tempo": timeRaiaTwo
+    }] : ""
+    raiaTree == "true" ? data = [...data, {
+      "Raia": "3",
+      "Número de Peito": numberRaiaTree,
+      "Tempo": timeRaiaOne
+    }] : ""
+
+    console.log("DATA: ", data)
+
+    setTimeout(() => {
+      exportCSV(data);
+
+      setIsLoading(false);
+    }, 1000);
+
+  }
+
   return (
     <main className="fullContainer">
       <Header title={"Visualizar Resultado"}></Header>
@@ -101,10 +142,15 @@ export default function View() {
       <div className="mainContainer" style={{ width: "100%", justifyContent: "flex-start" }}>
         <div className="mainView">
           <div className="viewButtonsDiv">
-            <button className="btnBlue viewBtn">Baixar CSV</button>
+            <button
+              className={isLoadingDel === true ? "btnDisabled viewBtn" : "btnBlue viewBtn"}
+              onClick={() => createCSV()}
+              disabled={isLoading === true || isLoadingDel === true}
+            >{isLoading === true ? "Baixando..." : "Baixar CSV"}</button>
             <button
               onClick={() => setDeleteModal(true)}
-              className="btnRed viewBtn">Apagar Tudo</button>
+              disabled={isLoading || isLoadingDel === true}
+              className={isLoading === true ? "btnDisabled viewBtn" : "btnRed viewBtn"}>{isLoadingDel === true ? <Loading></Loading> : "Apagar Dados"}</button>
           </div>
           <div className="viewInfoDiv">
             <ul className="viewList">

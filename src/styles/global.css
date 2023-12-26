@@ -67,6 +67,7 @@
   --grey-opacity: #f8f2ea;
   --yellow-opacity: #edffb0;
   --green-opacity: #c3f8eb;
+  --red-opacity: #ff95a2;
 
   --black-neutral-dark: #111111;
   --grey-neutral-one: #292929;
@@ -246,6 +247,7 @@ textarea:focus {
   align-items: center;
   gap: 7px;
   cursor: pointer;
+  transition: all 0.5 ease;
 }
 .btnBlue {
   font-weight: bold;
@@ -263,6 +265,7 @@ textarea:focus {
   align-items: center;
   gap: 7px;
   cursor: pointer;
+  transition: all 0.5 ease;
 }
 .btnBlack {
   font-weight: bold;
@@ -280,6 +283,7 @@ textarea:focus {
   align-items: center;
   gap: 7px;
   cursor: pointer;
+  transition: all 0.5 ease;
 }
 .btnRed {
   font-weight: bold;
@@ -297,6 +301,7 @@ textarea:focus {
   align-items: center;
   gap: 7px;
   cursor: pointer;
+  transition: all 0.5 ease;
 }
 .btnDisabled {
   font-weight: bold;
@@ -314,6 +319,7 @@ textarea:focus {
   align-items: center;
   gap: 7px;
   cursor: pointer;
+  transition: all 0.5 ease;
 }
 .btnGreen img {
   width: 20px;
@@ -353,6 +359,28 @@ textarea:focus {
 
   to {
     transform: rotate(1turn);
+  }
+}
+
+@media (min-width: 930px) {
+  .btnGreen:hover {
+    background-color: var(--green-opacity);
+    transform: scale(1.1);
+    color: var(--black-neutral-dark);
+  }
+  .btnBlue:hover {
+    background-color: var(--blue-opacity);
+    transform: scale(1.1);
+    color: var(--black-neutral-dark);
+  }
+  .btnBlack:hover {
+    background-color: var(--grey-neutral-two);
+    transform: scale(1.1);
+  }
+  .btnRed:hover {
+    background-color: var(--red-opacity);
+    transform: scale(1.1);
+    color: var(--black-neutral-dark);
   }
 }
 
@@ -781,7 +809,7 @@ textarea:focus {
 
 .viewBtn {
   cursor: pointer;
-  min-width: 140px;
+  min-width: 170px;
 }
 
 .viewInfoDiv {
