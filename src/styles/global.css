@@ -600,7 +600,8 @@ textarea:focus {
     height: 120px !important;
   }
   .raiaInfo {
-    padding: 20px 0;
+    width: 100%;
+    padding: 20px 5px;
     gap: 10px;
   }
 }
@@ -658,6 +659,12 @@ textarea:focus {
   font-size: 16px;
 }
 
+.counter {
+  width: 100%;
+  text-align: left;
+  padding-left: 80px;
+}
+
 @media (min-width: 930px) {
   .raiaDiv {
     max-width: 930px;
@@ -670,6 +677,10 @@ textarea:focus {
 
   .raiaInfo {
     padding: 30px 0;
+  }
+
+  .counter {
+    padding-left: 80px;
   }
 }
 
@@ -1009,6 +1020,7 @@ textarea:focus {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   gap: 40px;
   color: #ffffff;
+  z-index: 98;
 }
 
 .btnModalConfirm {
@@ -1048,6 +1060,7 @@ textarea:focus {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   gap: 40px;
   color: #ffffff;
+  z-index: 99;
 }
 
 .raia-number-input {

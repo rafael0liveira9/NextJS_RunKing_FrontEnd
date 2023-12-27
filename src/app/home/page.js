@@ -38,6 +38,9 @@ export default function EventSelect() {
   const [timeRaiaTwo, setTimeRaiaTwo] = useState("-")
   const [timeRaiaTree, setTimeRaiaTree] = useState("-")
 
+  const [startRun, setStartRun] = useState()
+  const [stopRun, setStopRun] = useState()
+
   const URL_API_RUNKING = "https://api.runking.com.br/"
 
 
@@ -112,31 +115,42 @@ export default function EventSelect() {
 
   }
 
+  let t1 = 0;
+  let t2 = 0;
+  let t3 = 0;
+
   const eventStart = async () => {
+    let t = new (Date)
+
+    setStartRun(t)
+
     setModalRaiaOne(false)
     setModalRaiaTwo(false)
     setModalRaiaTree(false)
     setisLoadingFin(false)
     setisLoadingIni(true)
 
-    localStorage.setItem(`raia_one_time`, 0)
-    localStorage.setItem(`raia_two_time`, 0)
-    localStorage.setItem(`raia_tree_time`, 0)
-    setTimeRaiaOne(0)
-    setTimeRaiaTwo(0)
-    setTimeRaiaTree(0)
+
+
+
 
     if (raiaOne != "true") {
       localStorage.setItem("raia_one_number", "-")
       setNumberRaiaOne("-")
+    } else {
+      document.getElementById(`raia-1`).innerHTML = `Tempo: ${formatTime(t1)}`
     }
     if (raiaTwo != "true") {
       localStorage.setItem("raia_two_number", "-")
       setNumberRaiaTwo("-")
+    } else {
+      document.getElementById(`raia-2`).innerHTML = `Tempo: ${formatTime(t2)}`
     }
     if (raiaTree != "true") {
       localStorage.setItem("raia_tree_number", "-")
       setNumberRaiaTree("-")
+    } else {
+      document.getElementById(`raia-3`).innerHTML = `Tempo: ${formatTime(t3)}`
     }
 
     setIsRunning(true);
@@ -145,22 +159,31 @@ export default function EventSelect() {
 
   const eventStop = () => {
     setIsRunning(false);
-    setisLoadingIni(false)
+    setisLoadingIni(false);
+
+    let t = new (Date)
+
+
+    localStorage.setItem("raia_one_time", `${formatTime(t - startRun)}`)
+    localStorage.setItem("raia_two_time", `${formatTime(t - startRun)}`)
+    localStorage.setItem("raia_tree_time", `${formatTime(t - startRun)}`)
 
     router.push("/view")
   };
 
-  const formatTime = (totalSeconds) => {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
+  const formatTime = (totalMilliseconds) => {
+    const centiseconds = Math.floor((totalMilliseconds % 1000) / 10);
+    const seconds = Math.floor((totalMilliseconds / 1000) % 60);
+    const minutes = Math.floor((totalMilliseconds / (1000 * 60)) % 60);
+    const hours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
 
-    const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+    const formattedTime = `${hours != 0 ? `${padZero(hours)}:` : ""}${padZero(minutes)}:${padZero(seconds)}:${padZero(centiseconds)}`;
     return formattedTime;
   };
 
   const padZero = (num) => {
-    return num < 10 ? `0${num}` : num;
+    const paddedNum = num < 10 ? `0${num}` : `${num}`;
+    return paddedNum;
   };
 
   useEffect(() => {
@@ -168,39 +191,24 @@ export default function EventSelect() {
 
     const fetchTimes = async () => {
 
-      if (raiaOne == 'true') {
-        let seconds = parseInt(localStorage.getItem(`raia_one_time`), 10) || 0;
-        seconds += 1;
-
-        const formattedTime = formatTime(seconds);
-
-        localStorage.setItem(`raia_one_time`, seconds);
-        setTimeRaiaOne(formattedTime)
+      if (raiaOne === 'true') {
+        t1 += 10;
+        document.getElementById(`raia-1`).innerHTML = `Tempo: ${formatTime(t1)}`;
       }
 
       if (raiaTwo == 'true') {
-        let seconds = parseInt(localStorage.getItem(`raia_two_time`), 10) || 0;
-        seconds += 1;
-
-        const formattedTime = formatTime(seconds);
-
-        localStorage.setItem(`raia_two_time`, seconds);
-        setTimeRaiaTwo(formattedTime)
+        t2 += 10;
+        document.getElementById(`raia-2`).innerHTML = `Tempo: ${formatTime(t2)}`;
       }
 
       if (raiaTree == 'true') {
-        let seconds = parseInt(localStorage.getItem(`raia_tree_time`), 10) || 0;
-        seconds += 1;
-
-        const formattedTime = formatTime(seconds);
-
-        localStorage.setItem(`raia_tree_time`, seconds);
-        setTimeRaiaTree(formattedTime)
+        t3 += 10;
+        document.getElementById(`raia-3`).innerHTML = `Tempo: ${formatTime(t3)}`;
       }
     };
 
     if (isRunning) {
-      interval = setInterval(fetchTimes, 1000);
+      interval = setInterval(fetchTimes, 10);
     }
 
     return () => clearInterval(interval);
@@ -318,9 +326,9 @@ export default function EventSelect() {
             {eventSelected?.raiaOne != "true" && eventSelected?.raiaTwo != "true" && eventSelected?.raiaTree != "true" ?
               <p style={{ margin: "100px" }}>Nenhuma Raia Selecionada</p>
               : ""}
-            <RaiaCard status={eventSelected?.raiaOne == "true" ? true : false} title="RAIA 1" number={numberRaiaOne} time={timeRaiaOne}></RaiaCard>
-            <RaiaCard status={eventSelected?.raiaTwo == "true" ? true : false} title="RAIA 2" number={numberRaiaTwo} time={timeRaiaTwo}></RaiaCard>
-            <RaiaCard status={eventSelected?.raiaTree == "true" ? true : false} title="RAIA 3" number={numberRaiaTree} time={timeRaiaTree}></RaiaCard>
+            <RaiaCard status={eventSelected?.raiaOne == "true" ? true : false} title="RAIA 1" number={numberRaiaOne} time={"-"}></RaiaCard>
+            <RaiaCard status={eventSelected?.raiaTwo == "true" ? true : false} title="RAIA 2" number={numberRaiaTwo} time={"-"}></RaiaCard>
+            <RaiaCard status={eventSelected?.raiaTree == "true" ? true : false} title="RAIA 3" number={numberRaiaTree} time={"-"}></RaiaCard>
           </div>
         </div>
       </div>

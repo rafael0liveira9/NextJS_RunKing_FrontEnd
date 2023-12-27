@@ -2,7 +2,8 @@
 
 
 
-export default function RaiaCard({ status, title, number, time }) {
+export default function RaiaCard({ status, title, number }) {
+    const id = title === "RAIA 1" ? "raia-1" : title === "RAIA 2" ? "raia-2" : "raia-3"
     if (status === true) {
         return (
             <div className="raiaCard">
@@ -11,7 +12,7 @@ export default function RaiaCard({ status, title, number, time }) {
                 </div>
                 <div className="raiaInfo">
                     <p>Número: {number}</p>
-                    <p>Tempo: {time}</p>
+                    <p id={`${id}`} className="counter">Tempo: 00:00:00</p>
                 </div>
             </div>
         )

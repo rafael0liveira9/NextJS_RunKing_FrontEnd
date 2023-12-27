@@ -46,15 +46,20 @@ export default function View() {
 
     setEventName(event?.title)
     setEventDate(event?.mainDate)
+
     setRaiaOne(localStorage.getItem("event_raia_one"))
     setRaiaTwo(localStorage.getItem("event_raia_two"))
     setRaiaTree(localStorage.getItem("event_raia_tree"))
+
     setNumberRaiaOne(localStorage.getItem("raia_one_number"))
-    setTimeRaiaOne(formatTime(localStorage.getItem("raia_one_time")))
+    setTimeRaiaOne(localStorage.getItem("raia_one_time"))
+
     setNumberRaiaTwo(localStorage.getItem("raia_two_number"))
-    setTimeRaiaTwo(formatTime(localStorage.getItem("raia_two_time")))
+    setTimeRaiaTwo(localStorage.getItem("raia_two_time"))
+
     setNumberRaiaTree(localStorage.getItem("raia_tree_number"))
-    setTimeRaiaTree(formatTime(localStorage.getItem("raia_tree_time")))
+    setTimeRaiaTree(localStorage.getItem("raia_tree_time"))
+
   }
 
   function deleteData() {
@@ -75,9 +80,9 @@ export default function View() {
     setNumberRaiaTwo("-")
     setNumberRaiaTree("-")
 
-    setTimeRaiaOne(0)
-    setTimeRaiaTwo(0)
-    setTimeRaiaTree(0)
+    setTimeRaiaOne("00:00:00")
+    setTimeRaiaTwo("00:00:00")
+    setTimeRaiaTree("00:00:00")
 
     setDeleteModal(false)
 
@@ -87,21 +92,9 @@ export default function View() {
     }, 1000);
   }
 
-  const formatTime = (totalSeconds) => {
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    const formattedTime = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
-    return formattedTime;
-  };
-
-  const padZero = (num) => {
-    return num < 10 ? `0${num}` : num;
-  };
-
   useEffect(() => {
     getData();
+
   }, [path])
 
   let data = [];
@@ -125,7 +118,6 @@ export default function View() {
       "Tempo": timeRaiaOne
     }] : ""
 
-    console.log("DATA: ", data)
 
     setTimeout(() => {
       exportCSV(data);
@@ -134,7 +126,6 @@ export default function View() {
     }, 1000);
 
   }
-
   return (
     <main className="fullContainer">
       <Header title={"Visualizar Resultado"}></Header>
