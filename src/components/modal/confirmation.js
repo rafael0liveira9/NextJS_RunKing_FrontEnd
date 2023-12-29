@@ -5,11 +5,16 @@
 export default function ConfirmModal({ confirm, cancel, question }) {
 
     return (
-        <div class="confirm-modal">
-
+        <form
+            class="confirm-modal"
+            onSubmit={(e) => { e.preventDefault(), confirm }}
+        >
             <p>Tem certeza que deseja {question}?</p>
             <div className="btnModalConfirm">
-                <button className="btnRed"
+                <button
+                    autoFocus
+                    className="btnRed"
+                    type="submit"
                     onClick={confirm}
                 >Sim</button>
                 <button className="btnGreen"
@@ -17,7 +22,7 @@ export default function ConfirmModal({ confirm, cancel, question }) {
                 >Não</button>
 
             </div>
-        </div>
+        </form>
 
     )
 }

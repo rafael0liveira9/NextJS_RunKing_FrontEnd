@@ -239,7 +239,7 @@ textarea:focus {
   min-height: 40px;
   background-color: var(--green-primary);
   color: var(--black-neutral-dark);
-  padding: 10px 35px;
+  padding: 10px 25px;
   border-radius: 35px;
   display: flex;
   flex-direction: row;
@@ -257,7 +257,7 @@ textarea:focus {
   min-height: 40px;
   background-color: var(--blue-secondary);
   color: var(--white-primary);
-  padding: 10px 35px;
+  padding: 10px 25px;
   border-radius: 35px;
   display: flex;
   flex-direction: row;
@@ -275,7 +275,7 @@ textarea:focus {
   min-height: 40px;
   background-color: var(--black-neutral-dark);
   color: var(--green-primary);
-  padding: 10px 35px;
+  padding: 10px 25px;
   border-radius: 35px;
   display: flex;
   flex-direction: row;
@@ -293,7 +293,7 @@ textarea:focus {
   min-height: 40px;
   background-color: var(--red-primary);
   color: var(--white-primary);
-  padding: 10px 35px;
+  padding: 10px 25px;
   border-radius: 35px;
   display: flex;
   flex-direction: row;
@@ -311,7 +311,7 @@ textarea:focus {
   letter-spacing: 10%;
   color: var(--grey-neutral-six);
   border: var(--grey-neutral-seven) 1px solid;
-  padding: 10px 35px;
+  padding: 10px 25px;
   border-radius: 35px;
   display: flex;
   flex-direction: row;
@@ -859,6 +859,7 @@ textarea:focus {
   width: 50%;
   border: var(--grey-neutral-four) 1px solid;
   padding: 4px 10px;
+  white-space: nowrap;
 }
 
 .viewListItem h6 {

@@ -19,7 +19,10 @@ export default function EventSelect() {
   const [eventSelected, setEventSelected] = useState({})
   const [isLoadingIni, setisLoadingIni] = useState(false)
   const [isLoadingFin, setisLoadingFin] = useState(false)
-  const [isRunning, setIsRunning] = useState(false);
+
+  const [isRunningFirst, setisRunningFirst] = useState(false);
+  const [isRunningSecond, setisRunningSecond] = useState(false);
+  const [isRunningThird, setisRunningThird] = useState(false);
 
   const [modalRaiaOne, setModalRaiaOne] = useState(false)
   const [modalRaiaTwo, setModalRaiaTwo] = useState(false)
@@ -41,44 +44,7 @@ export default function EventSelect() {
   const [startRun, setStartRun] = useState()
   const [stopRun, setStopRun] = useState()
 
-  const URL_API_RUNKING = "https://api.runking.com.br/"
-
-
-  useEffect(() => {
-    alreadyLogin();
-  }, [path])
-
-  useEffect(() => {
-
-    if (localStorage.getItem("raia_one_number") != undefined) {
-
-      setNumberRaiaOne(localStorage.getItem("raia_one_number"))
-      setTimeRaiaOne(formatTime(localStorage.getItem("raia_one_time")))
-    } else {
-      console.log("erro 1")
-      setNumberRaiaOne("-")
-      setTimeRaiaOne("-")
-    }
-    if (localStorage.getItem("raia_two_number") != undefined) {
-
-      setNumberRaiaTwo(localStorage.getItem("raia_two_number"))
-      setTimeRaiaTwo(formatTime(localStorage.getItem("raia_two_time")))
-    } else {
-      console.log("erro 2")
-      setNumberRaiaTwo("-")
-      setTimeRaiaTwo("-")
-    }
-    if (localStorage.getItem("raia_tree_number") != undefined) {
-
-      setNumberRaiaTree(localStorage.getItem("raia_tree_number"))
-      setTimeRaiaTree(formatTime(localStorage.getItem("raia_tree_time")))
-    } else {
-      console.log("erro 3")
-      setNumberRaiaTree("-")
-      setTimeRaiaTree("-")
-    }
-
-  }, [modalRaiaOne, modalRaiaTwo, modalRaiaTree, path])
+  const URL_API_RUNKING = "https://kingofit.com.br/apirunkingmaxprov3/"
 
   function alreadyLogin() {
     const user = {
@@ -123,16 +89,11 @@ export default function EventSelect() {
     let t = new (Date)
 
     setStartRun(t)
-
     setModalRaiaOne(false)
     setModalRaiaTwo(false)
     setModalRaiaTree(false)
     setisLoadingFin(false)
     setisLoadingIni(true)
-
-
-
-
 
     if (raiaOne != "true") {
       localStorage.setItem("raia_one_number", "-")
@@ -153,22 +114,95 @@ export default function EventSelect() {
       document.getElementById(`raia-3`).innerHTML = `Tempo: ${formatTime(t3)}`
     }
 
-    setIsRunning(true);
+    setisRunningFirst(true);
+    setisRunningSecond(true);
+    setisRunningThird(true);
+
+    // const data = {
+    //   "atleta0": raiaOne != "true" ? "-" : numberRaiaOne,
+    //   "atleta1": raiaTwo != "true" ? "-" : numberRaiaTwo,
+    //   "atleta2": raiaTree != "true" ? "-" : numberRaiaTree,
+    //   "atleta3": "-",
+    //   "atleta4": "-",
+    //   "atleta5": "-",
+    //   "atleta6": "-",
+    //   "atleta7": "-",
+    //   "atleta8": "-",
+    //   "atleta9": "-"
+    // };
+
+
+    // try {
+    //   console.log("body: ", data)
+    //   const response = await fetch(`${URL_API_RUNKING}control/start`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    //   });
+
+    //   console.log("antes: ", response)
+
+    //   if (response?.status != 200) {
+    //     console.log(response);
+    //   }
+
+    //   const result = await response.json();
+    // } catch (error) {
+    //   console.error(`Erro durante a solicitação: ${error.message}`);
+    // }
 
   };
 
   const eventStop = () => {
-    setIsRunning(false);
-    setisLoadingIni(false);
+
+    if (isRunningFirst === false && isRunningSecond === false && isRunningThird === false) {
+      setisLoadingIni(false);
+      router.push("/view")
+      return ""
+    } else {
+
+      if (isRunningFirst == true) {
+        setisRunningFirst(false);
+      }
+      if (isRunningSecond == true) {
+        setisRunningSecond(false);
+      }
+      if (isRunningThird == true) {
+        setisRunningThird(false);
+      }
+
+      setisLoadingIni(false);
+
+      let t = new (Date)
+
+
+      localStorage.setItem("raia_one_time", `${formatTime(t - startRun)}`)
+      localStorage.setItem("raia_two_time", `${formatTime(t - startRun)}`)
+      localStorage.setItem("raia_tree_time", `${formatTime(t - startRun)}`)
+
+      router.push("/view")
+    }
+  };
+
+  const raiaSingleStop = (raia) => {
 
     let t = new (Date)
 
+    if (raia === "raia_one_time") {
+      localStorage.setItem("raia_one_time", `${formatTime(t - startRun)}`)
+      setisRunningFirst(false);
+    }
+    if (raia === "raia_two_time") {
+      localStorage.setItem("raia_two_time", `${formatTime(t - startRun)}`)
+      setisRunningSecond(false);
+    }
+    if (raia === "raia_tree_time") {
+      localStorage.setItem("raia_tree_time", `${formatTime(t - startRun)}`)
+      setisRunningThird(false);
+    }
 
-    localStorage.setItem("raia_one_time", `${formatTime(t - startRun)}`)
-    localStorage.setItem("raia_two_time", `${formatTime(t - startRun)}`)
-    localStorage.setItem("raia_tree_time", `${formatTime(t - startRun)}`)
-
-    router.push("/view")
   };
 
   const formatTime = (totalMilliseconds) => {
@@ -177,7 +211,7 @@ export default function EventSelect() {
     const minutes = Math.floor((totalMilliseconds / (1000 * 60)) % 60);
     const hours = Math.floor(totalMilliseconds / (1000 * 60 * 60));
 
-    const formattedTime = `${hours != 0 ? `${padZero(hours)}:` : ""}${padZero(minutes)}:${padZero(seconds)}:${padZero(centiseconds)}`;
+    const formattedTime = `${hours != 0 ? `${padZero(hours)}:` : ""}${padZero(minutes)}:${padZero(seconds)}.${padZero(centiseconds)}`;
     return formattedTime;
   };
 
@@ -185,36 +219,6 @@ export default function EventSelect() {
     const paddedNum = num < 10 ? `0${num}` : `${num}`;
     return paddedNum;
   };
-
-  useEffect(() => {
-    let interval;
-
-    const fetchTimes = async () => {
-
-      if (raiaOne === 'true') {
-        t1 += 10;
-        document.getElementById(`raia-1`).innerHTML = `Tempo: ${formatTime(t1)}`;
-      }
-
-      if (raiaTwo == 'true') {
-        t2 += 10;
-        document.getElementById(`raia-2`).innerHTML = `Tempo: ${formatTime(t2)}`;
-      }
-
-      if (raiaTree == 'true') {
-        t3 += 10;
-        document.getElementById(`raia-3`).innerHTML = `Tempo: ${formatTime(t3)}`;
-      }
-    };
-
-    if (isRunning) {
-      interval = setInterval(fetchTimes, 10);
-    }
-
-    return () => clearInterval(interval);
-  }, [isRunning]);
-
-
 
   function openRaiaOneModal() {
     modalConfirm === true ? setModalConfirm(false) : ""
@@ -239,6 +243,105 @@ export default function EventSelect() {
     isLoadingFin === true ? setisLoadingFin(false) : ""
     modalConfirm === true ? setModalConfirm(false) : ""
   }
+
+  function attTimer() {
+
+    setTimeout(() => {
+      let x = localStorage.getItem("raia_one_time")
+      let y = localStorage.getItem("raia_two_time")
+      let z = localStorage.getItem("raia_tree_time")
+
+      if (document.getElementById(`raia-1`) != null) {
+        document.getElementById(`raia-1`).innerHTML = `Tempo: ${x}`;
+      }
+
+      if (document.getElementById(`raia-2`) != null) {
+        document.getElementById(`raia-2`).innerHTML = `Tempo: ${y}`;
+      }
+
+      if (document.getElementById(`raia-3`) != null) {
+        document.getElementById(`raia-3`).innerHTML = `Tempo: ${z}`;
+      }
+    }, 100);
+  }
+
+  useEffect(() => {
+    let interval1;
+
+    const fetchTimesFirst = async () => {
+
+      if (raiaOne === 'true') {
+        t1 += 10;
+        document.getElementById(`raia-1`).innerHTML = `Tempo: ${formatTime(t1)}`;
+      }
+    };
+
+    if (isRunningFirst) {
+      interval1 = setInterval(fetchTimesFirst, 10);
+    }
+
+    return () => { clearInterval(interval1) }
+  }, [isRunningFirst]);
+
+  useEffect(() => {
+    let interval2;
+
+    const fetchTimesSecond = async () => {
+      if (raiaTwo == 'true') {
+        t2 += 10;
+        document.getElementById(`raia-2`).innerHTML = `Tempo: ${formatTime(t2)}`;
+      }
+    };
+
+    if (isRunningSecond) {
+      interval2 = setInterval(fetchTimesSecond, 10);
+    }
+
+    return () => { clearInterval(interval2) }
+  }, [isRunningSecond]);
+
+  useEffect(() => {
+    let interval3;
+
+    const fetchTimesThird = async () => {
+      if (raiaTree == 'true') {
+        t3 += 10;
+        document.getElementById(`raia-3`).innerHTML = `Tempo: ${formatTime(t3)}`;
+      }
+    };
+
+    if (isRunningThird) {
+      interval3 = setInterval(fetchTimesThird, 10);
+    }
+
+
+    return () => { clearInterval(interval3) }
+  }, [isRunningThird]);
+
+  useEffect(() => {
+    alreadyLogin();
+  }, [path])
+
+  useEffect(() => {
+    if (localStorage.getItem("raia_one_number") != undefined) {
+      setNumberRaiaOne(localStorage.getItem("raia_one_number"))
+
+    } else {
+      setNumberRaiaOne("-")
+    }
+    if (localStorage.getItem("raia_two_number") != undefined) {
+      setNumberRaiaTwo(localStorage.getItem("raia_two_number"))
+    } else {
+      setNumberRaiaTwo("-")
+    }
+    if (localStorage.getItem("raia_tree_number") != undefined) {
+      setNumberRaiaTree(localStorage.getItem("raia_tree_number"))
+    } else {
+      setNumberRaiaTree("-")
+
+    }
+
+  }, [modalRaiaOne, modalRaiaTwo, modalRaiaTree, path])
 
   return (
     <main className="fullContainer">
@@ -291,6 +394,7 @@ export default function EventSelect() {
                 ? "btnDisabled btnGeneral"
                 : "btnGreen btnGeneral"
               }
+              autoFocus={(eventSelected?.raiaOne == false && eventSelected?.raiaTwo == false && eventSelected?.raiaTree == false) || isLoadingIni === false}
               disabled={(eventSelected?.raiaOne == false && eventSelected?.raiaTwo == false && eventSelected?.raiaTree == false) || isLoadingIni === true}
               onClick={numberRaiaOne != "-" || numberRaiaTwo != "-" || numberRaiaTree != "-"
                 ? () => setModalConfirm(true)
@@ -331,6 +435,29 @@ export default function EventSelect() {
             <RaiaCard status={eventSelected?.raiaTree == "true" ? true : false} title="RAIA 3" number={numberRaiaTree} time={"-"}></RaiaCard>
           </div>
         </div>
+        <button
+          onClick={() => {
+            if (isRunningFirst == true) {
+              raiaSingleStop("raia_one_time")
+            } else if (isRunningSecond == true) {
+              raiaSingleStop("raia_two_time")
+            } else if (isRunningThird == true) {
+              raiaSingleStop("raia_tree_time")
+            } else {
+              console.log("nenhum corredor ativo")
+            }
+          }}
+          style={{
+            position: "fixed",
+            right: "3vw",
+            top: "20%",
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            backgroundColor: "#000000"
+          }}>
+          <img src="/icons/stop-circle-grey.svg"></img>
+        </button>
       </div>
       <FloatMenu></FloatMenu>
       <Footer></Footer>
