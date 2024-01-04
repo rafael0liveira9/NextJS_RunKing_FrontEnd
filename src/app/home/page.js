@@ -118,19 +118,8 @@ export default function EventSelect() {
     setisRunningSecond(true);
     setisRunningThird(true);
 
-    // const data = {
-    //   "atleta0": raiaOne != "true" ? "-" : numberRaiaOne,
-    //   "atleta1": raiaTwo != "true" ? "-" : numberRaiaTwo,
-    //   "atleta2": raiaTree != "true" ? "-" : numberRaiaTree,
-    //   "atleta3": "-",
-    //   "atleta4": "-",
-    //   "atleta5": "-",
-    //   "atleta6": "-",
-    //   "atleta7": "-",
-    //   "atleta8": "-",
-    //   "atleta9": "-"
-    // };
 
+    // FUNÇÃO DA API FICA COMENTADA POR ENQUANTO
 
     // try {
     //   console.log("body: ", data)
@@ -139,10 +128,20 @@ export default function EventSelect() {
     //     headers: {
     //       'Content-Type': 'application/json',
     //     },
-    //     body: JSON.stringify(data),
+    //     body: JSON.stringify({
+    //       "atleta0": raiaOne != "true" ? "-" : numberRaiaOne,
+    //       "atleta1": raiaTwo != "true" ? "-" : numberRaiaTwo,
+    //       "atleta2": raiaTree != "true" ? "-" : numberRaiaTree,
+    //       "atleta3": "-",
+    //       "atleta4": "-",
+    //       "atleta5": "-",
+    //       "atleta6": "-",
+    //       "atleta7": "-",
+    //       "atleta8": "-",
+    //       "atleta9": "-"
+    //     }),
     //   });
 
-    //   console.log("antes: ", response)
 
     //   if (response?.status != 200) {
     //     console.log(response);
@@ -155,7 +154,7 @@ export default function EventSelect() {
 
   };
 
-  const eventStop = () => {
+  const eventStop = async () => {
 
     if (isRunningFirst === false && isRunningSecond === false && isRunningThird === false) {
       setisLoadingIni(false);
@@ -181,6 +180,27 @@ export default function EventSelect() {
       localStorage.setItem("raia_one_time", `${formatTime(t - startRun)}`)
       localStorage.setItem("raia_two_time", `${formatTime(t - startRun)}`)
       localStorage.setItem("raia_tree_time", `${formatTime(t - startRun)}`)
+
+
+      // FUNÇÃO DA API FICA COMENTADA POR ENQUANTO
+
+      // try {
+
+      //   const response = await fetch(`${URL_API_RUNKING}control/stop`, {
+      //     method: 'POST'
+      //   });
+
+
+      //   if (response?.status != 200) {
+      //     console.log(response);
+      //   }
+
+      //   const result = await response.json();
+      // } catch (error) {
+      //   console.error(`Erro durante a solicitação: ${error.message}`);
+      // }
+
+      // };
 
       router.push("/view")
     }
