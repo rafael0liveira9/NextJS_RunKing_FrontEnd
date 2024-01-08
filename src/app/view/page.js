@@ -129,7 +129,7 @@ export default function View() {
   return (
     <main className="fullContainer">
       <Header title={"Visualizar Resultado"}></Header>
-      {deleteModal == true && <ConfirmModal confirm={() => deleteData()} cancel={() => setDeleteModal(false)} question={"Apagar os Dados"}></ConfirmModal>}
+      {deleteModal == true && <ConfirmModal confirm={() => deleteData()} cancel={() => setDeleteModal(false)} question={"Tem certeza que deseja Apagar os Dados"}></ConfirmModal>}
       <div className="mainContainer" style={{ width: "100%", justifyContent: "flex-start" }}>
         <div className="mainView">
           <div className="viewButtonsDiv">

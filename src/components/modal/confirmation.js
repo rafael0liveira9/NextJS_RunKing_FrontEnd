@@ -9,7 +9,7 @@ export default function ConfirmModal({ confirm, cancel, question }) {
             class="confirm-modal"
             onSubmit={(e) => { e.preventDefault(), confirm }}
         >
-            <p>Tem certeza que deseja {question}?</p>
+            <p>{question}?</p>
             <div className="btnModalConfirm">
                 <button
                     autoFocus

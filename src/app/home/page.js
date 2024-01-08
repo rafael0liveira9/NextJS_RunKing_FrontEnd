@@ -119,8 +119,6 @@ export default function EventSelect() {
     setisRunningThird(true);
 
 
-    // FUNÇÃO DA API FICA COMENTADA POR ENQUANTO
-
     // try {
     //   console.log("body: ", data)
     //   const response = await fetch(`${URL_API_RUNKING}control/start`, {
@@ -379,7 +377,7 @@ export default function EventSelect() {
                 ""
         }
         cancel={() => setModalConfirm(false)}
-        question={"apagar os dados e iniciar outra corrida"}
+        question={"Tem certeza que deseja apagar os dados e iniciar outra corrida"}
       ></ConfirmModal>}
 
 
